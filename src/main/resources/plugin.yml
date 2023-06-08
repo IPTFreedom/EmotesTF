@@ -1,0 +1,16 @@
+name: EmotesTF
+version: 1.0-SNAPSHOT
+description: Expansive and reliable emote system with support for custom emotes.
+author: Mafrans
+main: me.mafrans.emotestf.EmotesTF
+softdepend: [TotalFreedomMod]
+
+commands:
+    notifyme:
+        description: Enables or Disables notifications when you are mentioned.
+        usage: /<command> [on|off]
+        aliases: [notify]
+    emotes:
+        description: Lists emotes, alternatively mutes them.
+        usage: /<command> [list|mute]
+        aliases: [emotestf]
