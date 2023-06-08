@@ -35,7 +35,7 @@ public class FileUtils {
       int bytesRead = 0;
       String strFileContents = null;
 
-      while((bytesRead = in.read(contents)) != true) {
+      while((bytesRead = in.read(contents)) != 0) {
          strFileContents = strFileContents + new String(contents, 0, bytesRead);
       }
 

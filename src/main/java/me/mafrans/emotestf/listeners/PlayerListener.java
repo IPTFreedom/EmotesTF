@@ -27,7 +27,7 @@ public class PlayerListener implements Listener {
             for(Player p : Bukkit.getOnlinePlayers()) {
                MessageUtils.debugMessage(Level.INFO, "Checking " + p.getName());
                if (message.toLowerCase().contains("@" + p.getName().toLowerCase())
-                  && (!EmotesTF.plugin.TFMBridge.isEnabled() || !EmotesTF.plugin.TFMBridge.getVanishedPlayers().contains(p))) {
+                  && (!EmotesTF.plugin.TFMBridge.isEnabled() || !EmotesTF.plugin.TFMBridge.getVanishedPlayers().contains(p.getName()))) {
                   if (config.getBoolean("mentions.use-nicknames")) {
                      message = message.replaceAll(
                         "(?i)@" + p.getName(),
@@ -41,7 +41,7 @@ public class PlayerListener implements Listener {
                   }
 
                   if (!Command_notifyme.noNotify.contains(p)) {
-                     p.playSound(p.getLocation(), Sound.BLOCK_NOTE_HARP, 2.0F, 1.68F);
+                     p.playSound(p.getLocation(), Sound.BLOCK_NOTE_BLOCK_HARP, 2.0F, 1.68F);
                   }
                }
             }
