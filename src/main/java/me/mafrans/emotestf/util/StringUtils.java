@@ -6,51 +6,32 @@ import java.util.Random;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class StringUtils extends org.apache.commons.lang.StringUtils {
-   public static boolean equalsAny(String string, String[] strings) {
-      for(String s : strings) {
-         if (!s.equals(string)) {
-            return false;
-         }
-      }
+public final class StringUtils extends org.apache.commons.lang.StringUtils {
+    private static final Random rand = new Random();
 
-      return true;
-   }
+    public static String generateRandoms(final String in) {
+        final String pattern = "\\{([^{}])+}";
+        final StringBuilder outBuilder = new StringBuilder();
+        final String toSplit = in.replaceAll(pattern, "%%spl");
+        final String[] split = toSplit.split("%%spl");
+        final List<String> matches = new ArrayList<>();
+        final Matcher m = Pattern.compile(pattern).matcher(in);
 
-   public static boolean equalsAnyIgnoreCase(String string, String[] strings) {
-      for(String s : strings) {
-         if (!s.equalsIgnoreCase(string)) {
-            return false;
-         }
-      }
+        while (m.find()) {
+            matches.add(m.group());
+        }
 
-      return true;
-   }
+        for (int i = 0; i < split.length - (split.length > matches.size() ? 1 : 0); ++i) {
+            outBuilder.append(split[i]);
+            final String randoms = matches.get(i).substring(1, matches.get(i).length() - 1);
+            final String[] splitRandoms = randoms.split("\\|");
+            outBuilder.append(splitRandoms[rand.nextInt(splitRandoms.length - 1)]);
+        }
 
-   public static String generateRandoms(String in) {
-      String pattern = "\\{([^{}])+}";
-      StringBuilder outBuilder = new StringBuilder();
-      String toSplit = in.replaceAll(pattern, "%%spl");
-      String[] split = toSplit.split("%%spl");
-      List<String> matches = new ArrayList<>();
-      Matcher m = Pattern.compile(pattern).matcher(in);
+        if (split.length > matches.size()) {
+            outBuilder.append(split[split.length - 1]);
+        }
 
-      while(m.find()) {
-         matches.add(m.group());
-      }
-
-      for(int i = 0; i < split.length - (split.length > matches.size() ? 1 : 0); ++i) {
-         outBuilder.append(split[i]);
-         String randoms = matches.get(i).substring(1, matches.get(i).length() - 1);
-         String[] splitRandoms = randoms.split("\\|");
-         Random rand = new Random();
-         outBuilder.append(splitRandoms[rand.nextInt(splitRandoms.length - 1)]);
-      }
-
-      if (split.length > matches.size()) {
-         outBuilder.append(split[split.length - 1]);
-      }
-
-      return outBuilder.toString();
-   }
+        return outBuilder.toString();
+    }
 }
