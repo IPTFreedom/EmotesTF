@@ -4,6 +4,7 @@ description: Expansive and reliable emote system with support for custom emotes.
 author: Mafrans
 main: me.mafrans.emotestf.EmotesTF
 softdepend: [TotalFreedomMod]
+api-version: 1.17
 
 commands:
     notifyme:
